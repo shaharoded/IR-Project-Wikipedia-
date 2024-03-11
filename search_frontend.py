@@ -31,18 +31,16 @@ def search():
     '''
 
 
-
-    res = []
     query = request.args.get('query', '')
-    if len(query) == 0:
-      return jsonify(res)
     # BEGIN SOLUTION
-    res = backend.search_for_fronted(query)
-    if len(res) == 0:
-        res = []
+    try:
+        res = backend.search_for_fronted(query)
+        return jsonify(res)
+    except Exception as e:
+        return jsonify([("404", "No result found")])
 
     # END SOLUTION
-    return jsonify(res)
+
 
 @app.route("/search_body")
 def search_body():
